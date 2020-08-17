@@ -12,15 +12,10 @@ function isIDCard(value){
 function isURL(value){
   return /(http[s]?|ftp):\/\/[^\/\.]+?\..+\w$/i.test(value);
 }
-function isUserName(value){
-  return /^[a-zA-Z0-9_-]{4,16}$/.test(value)
-}
-
 
 module.exports = {
   isPhone,
   isEmail,
   isIDCard,
   isURL,
-  isUserName,
 }

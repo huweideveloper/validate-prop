@@ -14,29 +14,29 @@ const {
   isEmail,
   isIDCard,
   isURL,
-  isUserName,
 } = require('./validate');
 
 const Types = {
   notEmpty: 'notEmpty',
   len: 'length',
   notEqual: 'notEqual',
-  isPhone: 'isPhone',
-  isEmail: 'isEmail',
-  isIDCard: 'isIDCard',
-  isURL: 'isURL',
-  isUserName: 'isUserName',
+  phone: 'phone',
+  email: 'email',
+  IDCard: 'IDCard',
+  URL: 'URL',
 }
 
 const isPassValue = null;
+const defaultErrorMessage = 'fail';
+const getMessage = item => getString(item, 'message') || defaultErrorMessage;
 
 const map = {
   [Types.notEmpty]: (value, item) => {
-    return isNull(value) || isUndefined(value) || ( isString(value) && !isValidString(value) ) ? getString(item, 'message') : isPassValue; 
+    return isNull(value) || isUndefined(value) || ( isString(value) && !isValidString(value) ) ? getMessage(item) : isPassValue; 
   },
   [Types.len]: (value, item) => {
     value = getString(value)
-    const message = getString(item, 'message')
+    const message = getMessage(item);
     const values = getArray(item, 'value')
     const minLength = getNumber(values, '0')
     const maxLength = getNumber(values, '1')
@@ -50,22 +50,19 @@ const map = {
   },
   [Types.notEqual]: (value, item) => {
     const values = item['value'];
-    return value === values ? isPassValue : getString(item, 'message');
+    return value === values ? isPassValue : getMessage(item);
   },
-  [Types.isPhone]: (value, item) => {
-    return isPhone(value) ? isPassValue :  getString(item, 'message');
+  [Types.phone]: (value, item) => {
+    return isPhone(value) ? isPassValue :  getMessage(item);
   },
-  [Types.isEmail]: (value, item) => {
-    return isEmail(value) ? isPassValue : getString(item, 'message');
+  [Types.email]: (value, item) => {
+    return isEmail(value) ? isPassValue : getMessage(item);
   },
-  [Types.isIDCard]: (value, item) => {
-    return isIDCard(value) ? isPassValue : getString(item, 'message');
+  [Types.IDCard]: (value, item) => {
+    return isIDCard(value) ? isPassValue : getMessage(item);
   },
-  [Types.isURL]: (value, item) => {
-    return isURL(value) ? isPassValue : getString(item, 'message');
-  },
-  [Types.isUserName]: (value, item) => {
-    return isUserName(value) ? isPassValue : getString(item, 'message');
+  [Types.URL]: (value, item) => {
+    return isURL(value) ? isPassValue : getMessage(item);
   },
 };
 

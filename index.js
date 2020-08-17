@@ -3,6 +3,12 @@ const {
   isObject,
   isArray,
   isFunction,
+  isNull,
+  isUndefined,
+  isString,
+  isValidString,
+  isFalse,
+  isValidArray,
 } = require("validate-data-type");
 const {
   getString,
@@ -11,6 +17,7 @@ const map = require('./map');
 
 
 function Validation(config) {
+  this.defaultErrorMessage = 'fail';
   this.config = {};
   if (!isObject(config)) throw ("The parameters Validation the function must be object");
   if (this instanceof Validation) {
@@ -62,13 +69,14 @@ Validation.prototype.getMessage = async function (key, item, model) {
 }
 
 Validation.prototype.getSingleMessage = async function (key, item, model) {
-  if (!model.hasOwnProperty(key)) return null;
   const type = getString(item, 'type');
-  const message = getString(item, 'message');
+  const message = getString(item, 'message') || this.defaultErrorMessage;
   const test = item['test'];
   const value = model[key];
   if (isFunction(test)) {
-    return await test(value, key, item);
+    const result = await test(value, key, item);
+    if( isNull(result) || isUndefined(result) || isFalse(result) ) return null;
+    return isValidString(result) ? result : message;
   }
   if (map.hasOwnProperty(type)) {
     return map[type](value, item);
@@ -84,7 +92,7 @@ Validation.prototype.getResult = async function (messages) {
   };
   if (messages.length > 0) {
     const { message, key } = messages[0];
-    obj.error = isArray(message) ? message[0] : message;
+    obj.error = isValidArray(message) ? message[0] : message;
     obj.key = key;
   }
   return obj;
