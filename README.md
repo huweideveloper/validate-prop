@@ -1,26 +1,26 @@
 
-[中文文档](https://github.com/huweicool/check-data.js/blob/master/README-Chinese.md)
+[中文文档](https://github.com/huweicool/validate-prop/blob/master/README-Chinese.md)
 
-# check-data.js
+# validate-prop
 
 Test whether the data passes validation.
 
 
 ## Install
 
-Install with [npm](https://www.npmjs.com/package/check-data.js)
+Install with [npm](https://www.npmjs.com/package/validate-prop)
 
 ```sh
-  npm install --save check-data.js
+  npm install --save validate-prop
 ```
 
 
 ## Usage
 
 ```js
-import Check from 'check-data.js';
+import Validate from 'validate-prop';
 // or
-// const Check = require("check-data.js");
+// const Validate = require("validate-prop");
 const config = {
     userName: {
         type: 'notEmpty',
@@ -60,7 +60,7 @@ const model = {
     phone: "13912345678",
     code: "1234",
 }
- Check(config).start(model).then(({ error, key, result }) => {
+ Validate(config).start(model).then(({ error, key, result }) => {
     if( error ){
         // verification failed
         console.log(error); // error message

@@ -46,10 +46,9 @@ describe("Validation", function () {
         phone: "13912345678",
         code: "1234",
       })
-      .then(({ error, key, result }) => {
+      .then(({ error, list }) => {
         assert.deepStrictEqual(error, null);
-        assert.deepStrictEqual(key, null);
-        assert.deepStrictEqual(result, null);
+        assert.deepStrictEqual(list, null);
       });
 
     // failure
@@ -60,9 +59,8 @@ describe("Validation", function () {
         phone: "",
         code: "",
       })
-      .then(({ error, key, result }) => {
+      .then(({ error }) => {
         assert.deepStrictEqual(error, "The cell phone number cannot be empty");
-        assert.deepStrictEqual(key, "phone");
       });
   });
 });
@@ -79,10 +77,9 @@ describe("test notEmpty", function () {
       .start({
         userName: "lucas",
       })
-      .then(({ error, key, result }) => {
+      .then(({ error, list }) => {
         assert.deepStrictEqual(error, null);
-        assert.deepStrictEqual(key, null);
-        assert.deepStrictEqual(result, null);
+        assert.deepStrictEqual(list, null);
       });
     //failure
     new Validation({
@@ -94,7 +91,7 @@ describe("test notEmpty", function () {
       .start({
         userName: "",
       })
-      .then(({ error, key, result }) => {
+      .then(({ error, list }) => {
         assert.deepStrictEqual(error, "The user name cannot be empty");
       });
   });
@@ -113,10 +110,9 @@ describe("test length", function () {
       .start({
         userName: "lucas",
       })
-      .then(({ error, key, result }) => {
+      .then(({ error, list }) => {
         assert.deepStrictEqual(error, null);
-        assert.deepStrictEqual(key, null);
-        assert.deepStrictEqual(result, null);
+        assert.deepStrictEqual(list, null);
       });
     //failure
     new Validation({
@@ -129,7 +125,7 @@ describe("test length", function () {
       .start({
         userName: "a",
       })
-      .then(({ error, key, result }) => {
+      .then(({ error, list }) => {
         assert.deepStrictEqual(error, "The length is 5-10 characters");
       });
   });
@@ -148,10 +144,9 @@ describe("test notEqual", function () {
       .start({
         number: "10",
       })
-      .then(({ error, key, result }) => {
+      .then(({ error, list }) => {
         assert.deepStrictEqual(error, null);
-        assert.deepStrictEqual(key, null);
-        assert.deepStrictEqual(result, null);
+        assert.deepStrictEqual(list, null);
       });
     //failure
     new Validation({
@@ -164,7 +159,7 @@ describe("test notEqual", function () {
       .start({
         number: 10,
       })
-      .then(({ error, key, result }) => {
+      .then(({ error, list }) => {
         assert.deepStrictEqual(error, "not equal");
       });
   });
@@ -182,10 +177,9 @@ describe("test phone", function () {
       .start({
         phoneNumber: "13912345678",
       })
-      .then(({ error, key, result }) => {
+      .then(({ error, list }) => {
         assert.deepStrictEqual(error, null);
-        assert.deepStrictEqual(key, null);
-        assert.deepStrictEqual(result, null);
+        assert.deepStrictEqual(list, null);
       });
     //failure
     new Validation({
@@ -197,7 +191,7 @@ describe("test phone", function () {
       .start({
         phoneNumber: "131",
       })
-      .then(({ error, key, result }) => {
+      .then(({ error, list }) => {
         assert.deepStrictEqual(error, "Incorrect phone number format");
       });
   });
@@ -215,10 +209,9 @@ describe("test email", function () {
       .start({
         email: "helloWorld@gmail.com",
       })
-      .then(({ error, key, result }) => {
+      .then(({ error, list }) => {
         assert.deepStrictEqual(error, null);
-        assert.deepStrictEqual(key, null);
-        assert.deepStrictEqual(result, null);
+        assert.deepStrictEqual(list, null);
       });
     //failure
     new Validation({
@@ -230,7 +223,7 @@ describe("test email", function () {
       .start({
         email: "aaa",
       })
-      .then(({ error, key, result }) => {
+      .then(({ error, list }) => {
         assert.deepStrictEqual(error, "Email format error");
       });
   });
@@ -248,10 +241,9 @@ describe("test IDCard", function () {
       .start({
         id: "110101199003074258",
       })
-      .then(({ error, key, result }) => {
+      .then(({ error, list }) => {
         assert.deepStrictEqual(error, null);
-        assert.deepStrictEqual(key, null);
-        assert.deepStrictEqual(result, null);
+        assert.deepStrictEqual(list, null);
       });
     //failure
     new Validation({
@@ -263,7 +255,7 @@ describe("test IDCard", function () {
       .start({
         id: "123123",
       })
-      .then(({ error, key, result }) => {
+      .then(({ error, list }) => {
         assert.deepStrictEqual(error, "The id card format is incorrect");
       });
   });
@@ -281,10 +273,9 @@ describe("test URL", function () {
       .start({
         url: "https://www.google.com",
       })
-      .then(({ error, key, result }) => {
+      .then(({ error, list }) => {
         assert.deepStrictEqual(error, null);
-        assert.deepStrictEqual(key, null);
-        assert.deepStrictEqual(result, null);
+        assert.deepStrictEqual(list, null);
       });
     // successful
     new Validation({
@@ -296,10 +287,9 @@ describe("test URL", function () {
       .start({
         url: "https://google.com",
       })
-      .then(({ error, key, result }) => {
+      .then(({ error, list }) => {
         assert.deepStrictEqual(error, null);
-        assert.deepStrictEqual(key, null);
-        assert.deepStrictEqual(result, null);
+        assert.deepStrictEqual(list, null);
       });
     // successful
     new Validation({
@@ -311,10 +301,9 @@ describe("test URL", function () {
       .start({
         url: "http://google.com",
       })
-      .then(({ error, key, result }) => {
+      .then(({ error, list }) => {
         assert.deepStrictEqual(error, null);
-        assert.deepStrictEqual(key, null);
-        assert.deepStrictEqual(result, null);
+        assert.deepStrictEqual(list, null);
       });
     //failure
     new Validation({
@@ -326,7 +315,7 @@ describe("test URL", function () {
       .start({
         url: "https",
       })
-      .then(({ error, key, result }) => {
+      .then(({ error, list }) => {
         assert.deepStrictEqual(error, "Incorrect URL format");
       });
   });
