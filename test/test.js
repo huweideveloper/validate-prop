@@ -320,3 +320,57 @@ describe("test URL", function () {
       });
   });
 });
+
+
+
+describe("test enum", function () {
+  it("test enum", function () {
+    // successful
+    new Validation({
+      status: {
+        type: 'enum',
+        value: [-1,0,1,2],
+        message: "error",
+      },
+    })
+      .start({
+        status: 1,
+      })
+      .then(({ error, list }) => {
+        assert.deepStrictEqual(error, null);
+        assert.deepStrictEqual(list, null);
+      });
+
+      new Validation({
+        status: {
+          type: 'enum',
+          value: {
+            status1: 1,
+            status2: 2,
+          },
+          message: "error",
+        },
+      })
+        .start({
+          status: 2,
+        })
+        .then(({ error, list }) => {
+          assert.deepStrictEqual(error, null);
+          assert.deepStrictEqual(list, null);
+        });
+
+      new Validation({
+        status: {
+          type: 'enum',
+          value: [-1,0,1,2],
+          message: "error",
+        },
+      })
+        .start({
+          status: 10,
+        })
+        .then(({ error, list }) => {
+          assert.deepStrictEqual(error, 'error');
+        });
+    });
+});

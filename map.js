@@ -20,6 +20,7 @@ const Types = {
   notEmpty: 'notEmpty',
   len: 'length',
   notEqual: 'notEqual',
+  enum: 'enum',
   phone: 'phone',
   email: 'email',
   IDCard: 'IDCard',
@@ -51,6 +52,11 @@ const map = {
   [Types.notEqual]: (value, item) => {
     const values = item['value'];
     return value === values ? isPassValue : getMessage(item);
+  },
+  [Types.enum]: (value, item) => {
+    const values = item['value'] || {};
+    const i = Object.keys(values).findIndex(key=> values[key] === value )
+    return i > -1 ? isPassValue : getMessage(item);
   },
   [Types.phone]: (value, item) => {
     return isPhone(value) ? isPassValue :  getMessage(item);
