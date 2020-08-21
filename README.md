@@ -3,7 +3,7 @@
 
 # validate-prop
 
-Test whether the data passes validation.
+Verify that the data is correct
 
 
 ## Install
@@ -26,9 +26,9 @@ const config = {
         type: 'notEmpty',
         message: 'The user name cannot be empty',
     },
-    passworld: {
+    password: {
         type: 'notEmpty',
-        message: 'The passworld cannot be empty',
+        message: 'The password cannot be empty',
     },
     phone: {
         message: "Incorrect phone number format",
@@ -56,7 +56,7 @@ const config = {
 
 const model = {
     userName: 'lucas',
-    passworld: 'password123456',
+    password: 'password123456',
     phone: "13912345678",
     code: "1234",
 }
