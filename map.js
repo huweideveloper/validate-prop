@@ -39,13 +39,13 @@ const map = {
     value = getString(value)
     const message = getMessage(item);
     const values = getArray(item, 'value')
-    const minLength = getNumber(values, '0')
-    const maxLength = getNumber(values, '1')
-    if (values.length == 0) {
-      return message
-    } else if (values.length == 1) {
+    const minLength = getNumber(values, '0', null)
+    const maxLength = getNumber(values, '1', null)
+    if (values.length == 0 || isNull(minLength) ) return message
+    if (values.length == 1) {
       return value.length < minLength ? message : isPassValue
     } else {
+      if( isNull(maxLength) ) return message;
       return value.length < minLength || value.length > maxLength ? message : isPassValue
     }
   },

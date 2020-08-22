@@ -16,19 +16,19 @@ const TYPE = "type";
 const MESSAGE = "message";
 const TEST = "test";
 
-function Validation(config) {
+function Validate(config) {
   this.config = {};
   if (!isObject(config)){
-    throw "The parameters Validation the function must be object";
+    throw "The parameters Validate the function must be object";
   }
-  if (this instanceof Validation) {
+  if (this instanceof Validate) {
     this.config = config;
   } else {
-    return new Validation(config);
+    return new Validate(config);
   }
 }
 
-Validation.prototype.start = async function (model) {
+Validate.prototype.start = async function (model) {
   if (!isObject(model)){
     throw "The parameters start the function must be object";
   }
@@ -49,7 +49,7 @@ Validation.prototype.start = async function (model) {
   });
 };
 
-Validation.prototype.getMessage = async function (key, item, model) {
+Validate.prototype.getMessage = async function (key, item, model) {
   let result = null;
   if (isObject(item)) {
     const message = await this.getSingleMessage(key, item, model);
@@ -76,7 +76,7 @@ Validation.prototype.getMessage = async function (key, item, model) {
   return result;
 };
 
-Validation.prototype.getSingleMessage = async function (key, item, model) {
+Validate.prototype.getSingleMessage = async function (key, item, model) {
   const type = getString(item, TYPE);
   const message = getString(item, MESSAGE) || DEFAULT_ERROR_MESSAGE;
   const test = item[TEST];
@@ -92,7 +92,7 @@ Validation.prototype.getSingleMessage = async function (key, item, model) {
   return null;
 };
 
-Validation.prototype.getResult = async function (messages) {
+Validate.prototype.getResult = async function (messages) {
   let obj = {
     error: null,
     list: messages.length > 0 ? messages : null,
@@ -104,4 +104,4 @@ Validation.prototype.getResult = async function (messages) {
   return obj;
 };
 
-module.exports = Validation;
+module.exports = Validate;

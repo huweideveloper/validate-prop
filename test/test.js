@@ -108,7 +108,7 @@ describe("test length", function () {
       },
     })
       .start({
-        userName: "lucas",
+        userName: "12345",
       })
       .then(({ error, list }) => {
         assert.deepStrictEqual(error, null);
@@ -119,6 +119,20 @@ describe("test length", function () {
       userName: {
         type: "length",
         value: [5, 10],
+        message: "The length is 5-10 characters",
+      },
+    })
+      .start({
+        userName: "a",
+      })
+      .then(({ error, list }) => {
+        assert.deepStrictEqual(error, "The length is 5-10 characters");
+      });
+    //failure
+    new Validation({
+      userName: {
+        type: "length",
+        value: [],
         message: "The length is 5-10 characters",
       },
     })

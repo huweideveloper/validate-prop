@@ -1,6 +1,4 @@
 
-[中文文档](https://github.com/huweicool/validate-prop/blob/master/README-Chinese.md)
-
 # validate-prop
 
 Verify that the data is correct
@@ -60,13 +58,12 @@ const model = {
     phone: "13912345678",
     code: "1234",
 }
- Validate(config).start(model).then(({ error, key, result }) => {
+ Validate(config).start(model).then(({ error, result }) => {
     if( error ){
-        // verification failed
+        // failed
         console.log(error); // error message
         return;
     }
-    // verify successfully, do something
 });
 ```
 
