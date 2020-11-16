@@ -1,6 +1,6 @@
 "use strict";
 
-const Validation = require("../index");
+const Validation = require("../src/index");
 const assert = require("assert");
 
 describe("Validation", function () {
@@ -108,9 +108,10 @@ describe("test length", function () {
       },
     })
       .start({
-        userName: "12345",
+        userName: "123415",
       })
       .then(({ error, list }) => {
+        console.log("error====>"+error)
         assert.deepStrictEqual(error, null);
         assert.deepStrictEqual(list, null);
       });

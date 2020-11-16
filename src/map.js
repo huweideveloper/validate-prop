@@ -36,7 +36,6 @@ const map = {
     return isNull(value) || isUndefined(value) || ( isString(value) && !isValidString(value) ) ? getMessage(item) : isPassValue; 
   },
   [Types.len]: (value, item) => {
-    value = getString(value)
     const message = getMessage(item);
     const values = getArray(item, 'value')
     const minLength = getNumber(values, '0', null)
