@@ -6,7 +6,7 @@ const { terser } = require("rollup-plugin-terser");
 module.exports = {
     input: resolve(__dirname, './src/index.js'),
     output:{
-        name: "get-safe-value",
+        name: "Validate",
         file: resolve(__dirname, './index.js'),
         format: "umd",
     },
