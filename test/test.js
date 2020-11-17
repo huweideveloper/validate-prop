@@ -1,10 +1,10 @@
 "use strict";
 
-const Validation = require("../src/index");
+const Validate = require("../src/index");
 const assert = require("assert");
 
-describe("Validation", function () {
-  it("test Validation", function () {
+describe("Validate", function () {
+  it("test Validate", function () {
     const config = {
       userName: {
           type: 'notEmpty',
@@ -39,7 +39,7 @@ describe("Validation", function () {
   };
 
     // successful
-    new Validation(config)
+    new Validate(config)
       .start({
         userName: 'lucas',
         passworld: 'password123456',
@@ -52,7 +52,7 @@ describe("Validation", function () {
       });
 
     // failure
-    new Validation(config)
+    new Validate(config)
       .start({
         userName: 'lucas',
         passworld: 'password123456',
@@ -68,7 +68,7 @@ describe("Validation", function () {
 describe("test notEmpty", function () {
   it("test notEmpty", function () {
     // successful
-    new Validation({
+    new Validate({
       userName: {
         type: "notEmpty",
         message: "The user name cannot be empty",
@@ -82,7 +82,7 @@ describe("test notEmpty", function () {
         assert.deepStrictEqual(list, null);
       });
     //failure
-    new Validation({
+    new Validate({
       userName: {
         type: "notEmpty",
         message: "The user name cannot be empty",
@@ -100,7 +100,7 @@ describe("test notEmpty", function () {
 describe("test length", function () {
   it("test length", function () {
     // successful
-    new Validation({
+    new Validate({
       userName: {
         type: "length",
         value: [5, 10],
@@ -116,7 +116,7 @@ describe("test length", function () {
         assert.deepStrictEqual(list, null);
       });
     //failure
-    new Validation({
+    new Validate({
       userName: {
         type: "length",
         value: [5, 10],
@@ -130,7 +130,7 @@ describe("test length", function () {
         assert.deepStrictEqual(error, "The length is 5-10 characters");
       });
     //failure
-    new Validation({
+    new Validate({
       userName: {
         type: "length",
         value: [],
@@ -149,7 +149,7 @@ describe("test length", function () {
 describe("test notEqual", function () {
   it("test notEqual", function () {
     // successful
-    new Validation({
+    new Validate({
       number: {
         type: "notEqual",
         value: "10",
@@ -164,7 +164,7 @@ describe("test notEqual", function () {
         assert.deepStrictEqual(list, null);
       });
     //failure
-    new Validation({
+    new Validate({
       number: {
         type: "notEqual",
         value: "10",
@@ -183,7 +183,7 @@ describe("test notEqual", function () {
 describe("test phone", function () {
   it("test phone", function () {
     // successful
-    new Validation({
+    new Validate({
       phoneNumber: {
         type: "phone",
         message: "Incorrect phone number format",
@@ -197,7 +197,7 @@ describe("test phone", function () {
         assert.deepStrictEqual(list, null);
       });
     //failure
-    new Validation({
+    new Validate({
       phoneNumber: {
         type: "phone",
         message: "Incorrect phone number format",
@@ -215,7 +215,7 @@ describe("test phone", function () {
 describe("test email", function () {
   it("test email", function () {
     // successful
-    new Validation({
+    new Validate({
       email: {
         type: "email",
         message: "Email format error",
@@ -229,7 +229,7 @@ describe("test email", function () {
         assert.deepStrictEqual(list, null);
       });
     //failure
-    new Validation({
+    new Validate({
       email: {
         type: "email",
         message: "Email format error",
@@ -247,7 +247,7 @@ describe("test email", function () {
 describe("test IDCard", function () {
   it("test IDCard", function () {
     // successful
-    new Validation({
+    new Validate({
       id: {
         type: "IDCard",
         message: "The id card format is incorrect",
@@ -261,7 +261,7 @@ describe("test IDCard", function () {
         assert.deepStrictEqual(list, null);
       });
     //failure
-    new Validation({
+    new Validate({
       id: {
         type: "IDCard",
         message: "The id card format is incorrect",
@@ -279,7 +279,7 @@ describe("test IDCard", function () {
 describe("test URL", function () {
   it("test URL", function () {
     // successful
-    new Validation({
+    new Validate({
       url: {
         type: "URL",
         message: "Incorrect URL format",
@@ -293,7 +293,7 @@ describe("test URL", function () {
         assert.deepStrictEqual(list, null);
       });
     // successful
-    new Validation({
+    new Validate({
       url: {
         type: "URL",
         message: "Incorrect URL format",
@@ -307,7 +307,7 @@ describe("test URL", function () {
         assert.deepStrictEqual(list, null);
       });
     // successful
-    new Validation({
+    new Validate({
       url: {
         type: "URL",
         message: "Incorrect URL format",
@@ -321,7 +321,7 @@ describe("test URL", function () {
         assert.deepStrictEqual(list, null);
       });
     //failure
-    new Validation({
+    new Validate({
       url: {
         type: "URL",
         message: "Incorrect URL format",
@@ -341,7 +341,7 @@ describe("test URL", function () {
 describe("test enum", function () {
   it("test enum", function () {
     // successful
-    new Validation({
+    new Validate({
       status: {
         type: 'enum',
         value: [-1,0,1,2],
@@ -356,7 +356,7 @@ describe("test enum", function () {
         assert.deepStrictEqual(list, null);
       });
 
-      new Validation({
+      new Validate({
         status: {
           type: 'enum',
           value: {
@@ -374,7 +374,7 @@ describe("test enum", function () {
           assert.deepStrictEqual(list, null);
         });
 
-      new Validation({
+      new Validate({
         status: {
           type: 'enum',
           value: [-1,0,1,2],

@@ -1,4 +1,6 @@
-const { resolve, format } = require("path");
+const { resolve } = require("path");
+const { nodeResolve } = require("@rollup/plugin-node-resolve");
+const commonjs = require("@rollup/plugin-commonjs");
 const buble = require("@rollup/plugin-buble");
 const { terser } = require("rollup-plugin-terser");
 module.exports = {
@@ -9,6 +11,8 @@ module.exports = {
         format: "umd",
     },
     plugins:[
+        nodeResolve(),
+        commonjs(),
         buble({
             transforms: { asyncAwait: false }
         }),
