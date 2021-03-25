@@ -1,4 +1,4 @@
-const {
+import {
   isObject,
   isArray,
   isFunction,
@@ -7,52 +7,50 @@ const {
   isValidString,
   isFalse,
   isValidArray,
-} = require("validate-data-type");
-const { getString } = require("get-safe-value");
-const map = require("./map");
+} from './type'
+
+
+import { getString } from "get-safe-value";
+import map  from "./map";
 
 const DEFAULT_ERROR_MESSAGE = "fail";
 const TYPE = "type";
 const MESSAGE = "message";
 const TEST = "test";
 
-function Validate(config) {
-  this.config = {};
-  if (!isObject(config)){
-    throw "The parameters Validate the function must be object";
+
+
+async function validate(config: any, model: any): Promise<any> {
+  if (!isObject(config) || !isObject(model) ){
+    throw "The parameters validate the function must be object";
   }
-  if (this instanceof Validate) {
-    this.config = config;
-  } else {
-    return new Validate(config);
-  }
+  return new Promise( async resolve=>{
+    const message = await start(config, model);
+    resolve(message);
+  }) 
 }
 
-Validate.prototype.start = async function (model) {
-  if (!isObject(model)){
-    throw "The parameters start the function must be object";
-  }
-  const config = this.config;
-  return new Promise(async (resolve) => {
-    let messages = [];
+async function start(config: any, model: any) {
+  return new Promise(async resolve => {
+    let messages: any[] = [];
     const keys = Object.keys(config);
     for (let i = 0; i < keys.length; i++) {
-      const key = keys[i];
+      const key: string = keys[i];
       const item = config[key];
-      const message = await this.getMessage(key, item, model);
+      const message = await getMessage(key, item, model);
       if (message) {
         messages.push(message);
       }
     }
-    messages = this.getResult(messages);
-    resolve(messages);
+    const result = getResult(messages);
+    resolve(result);
   });
 };
 
-Validate.prototype.getMessage = async function (key, item, model) {
+async function getMessage(key:string, item: any, model: any) {
   let result = null;
   if (isObject(item)) {
-    const message = await this.getSingleMessage(key, item, model);
+    const message = await getSingleMessage(key, item, model);
     if (message) {
       result = {
         key,
@@ -63,7 +61,7 @@ Validate.prototype.getMessage = async function (key, item, model) {
   if (isArray(item)) {
     let messages = [];
     for (let i = 0; i < item.length; i++) {
-      const message = await this.getSingleMessage(key, item[i], model);
+      const message = await getSingleMessage(key, item[i], model);
       if (message) messages.push(message);
     }
     if (messages.length > 0) {
@@ -76,7 +74,7 @@ Validate.prototype.getMessage = async function (key, item, model) {
   return result;
 };
 
-Validate.prototype.getSingleMessage = async function (key, item, model) {
+async function getSingleMessage (key:string, item: any, model: any) {
   const type = getString(item, TYPE);
   const message = getString(item, MESSAGE) || DEFAULT_ERROR_MESSAGE;
   const test = item[TEST];
@@ -92,16 +90,22 @@ Validate.prototype.getSingleMessage = async function (key, item, model) {
   return null;
 };
 
-Validate.prototype.getResult = async function (messages) {
-  let obj = {
-    error: null,
+
+interface Result {
+  error: string,
+  list: any[],
+}
+
+function getResult(messages: any[]): Result {
+  let result: Result = {
+    error: "",
     list: messages.length > 0 ? messages : null,
   };
   if (messages.length > 0) {
     const { message } = messages[0];
-    obj.error = isValidArray(message) ? message[0] : message;
+    result.error = isValidArray(message) ? message[0] : message;
   }
-  return obj;
+  return result;
 };
 
-module.exports = Validate;
+export default validate;

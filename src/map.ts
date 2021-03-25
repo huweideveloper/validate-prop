@@ -1,20 +1,23 @@
-const {
-  getString,
+import {
   getNumber,
-  getArray,
-} = require("get-safe-value");
-const {
+  getObject,
+  getString,
+  getArray
+ } from "get-safe-value";
+
+import {
   isNull,
   isUndefined,
   isString,
   isValidString,
-} = require("validate-data-type");
-const {
+} from "./type";
+
+import {
   isPhone,
   isEmail,
   isIDCard,
   isURL,
-} = require('./validate');
+} from './validate';
 
 const Types = {
   notEmpty: 'notEmpty',
@@ -27,19 +30,19 @@ const Types = {
   URL: 'URL',
 }
 
-const isPassValue = null;
-const defaultErrorMessage = 'fail';
-const getMessage = item => getString(item, 'message') || defaultErrorMessage;
+const isPassValue: string = "";
+const defaultErrorMessage: string = 'fail';
+const getMessage = (item: any) => getString(item, 'message') || defaultErrorMessage;
 
 const map = {
-  [Types.notEmpty]: (value, item) => {
+  [Types.notEmpty]: (value: any, item: any) => {
     return isNull(value) || isUndefined(value) || ( isString(value) && !isValidString(value) ) ? getMessage(item) : isPassValue; 
   },
-  [Types.len]: (value, item) => {
+  [Types.len]: (value: any, item: any) => {
     const message = getMessage(item);
     const values = getArray(item, 'value')
-    const minLength = getNumber(values, '0', null)
-    const maxLength = getNumber(values, '1', null)
+    const minLength = getNumber(values, '0') || null;
+    const maxLength = getNumber(values, '1') || null;
     if (values.length == 0 || isNull(minLength) ) return message
     if (values.length == 1) {
       return value.length < minLength ? message : isPassValue
@@ -48,28 +51,27 @@ const map = {
       return value.length < minLength || value.length > maxLength ? message : isPassValue
     }
   },
-  [Types.notEqual]: (value, item) => {
+  [Types.notEqual]: (value: any, item: any) => {
     const values = item['value'];
     return value === values ? isPassValue : getMessage(item);
   },
-  [Types.enum]: (value, item) => {
+  [Types.enum]: (value: any, item: any) => {
     const values = item['value'] || {};
     const i = Object.keys(values).findIndex(key=> values[key] === value )
     return i > -1 ? isPassValue : getMessage(item);
   },
-  [Types.phone]: (value, item) => {
+  [Types.phone]: (value: any, item: any) => {
     return isPhone(value) ? isPassValue :  getMessage(item);
   },
-  [Types.email]: (value, item) => {
+  [Types.email]: (value: any, item: any) => {
     return isEmail(value) ? isPassValue : getMessage(item);
   },
-  [Types.IDCard]: (value, item) => {
+  [Types.IDCard]: (value: any, item: any) => {
     return isIDCard(value) ? isPassValue : getMessage(item);
   },
-  [Types.URL]: (value, item) => {
+  [Types.URL]: (value: any, item: any) => {
     return isURL(value) ? isPassValue : getMessage(item);
   },
 };
 
-
-module.exports = map
+export default map
